@@ -1,44 +1,59 @@
 #!/bin/bash
 # Revanced Extended forked by Anddea build
 source src/build/utils.sh
+# Download requirements
+dl_gh "revanced-patches" "anddea" "latest"
+dl_gh "revanced-cli" "inotia00" "latest"
 
-patch_rve_anddea () {
-	# Patch YouTube Revanced Extended Anddea:
-	dl_gh "revanced-cli" "revanced" "latest"
-	local v apk_name
-	if [[ "$1" == "latest" ]]; then
-		v="latest" apk_name="stable"
-	else
-		v="prerelease" apk_name="beta"
-	fi
-	dl_gh " revanced-patches revanced-integrations" "anddea" "$v"
-	get_patches_key "youtube-rve-anddea"
-	get_ver "Video playback" "com.google.android.youtube"
-	get_apk "youtube-$apk_name" "youtube" "google-inc/youtube/youtube"
-	patch "youtube-$apk_name" "anddea"
-	# Patch Youtube Music:
-	# Arm64-v8a
-	get_patches_key "youtube-music-rve-anddea"
-	get_ver "Video playback" "com.google.android.apps.youtube.music"
-	get_apk "youtube-music-$apk_name-arm64-v8a" "youtube-music" "google-inc/youtube-music/youtube-music" "arm64-v8a"
-	patch "youtube-music-$apk_name-arm64-v8a" "anddea"
-	# Armeabi-v7a
-	get_patches_key "youtube-music-rve-anddea"
-	get_ver "Video playback" "com.google.android.apps.youtube.music"
-	get_apk "youtube-music-$apk_name-armeabi-v7a" "youtube-music" "google-inc/youtube-music/youtube-music" "armeabi-v7a"
-	patch "youtube-music-$apk_name-armeabi-v7a" "anddea"
-	# Patch Reddit:
-	get_patches_key "reddit"
-	version="2024.17.0"
-	get_apk "reddit-$apk_name" "reddit" "redditinc/reddit/reddit"
-	patch "reddit-$apk_name" "anddea"
-	# Split architecture:
-	rm -f revanced-cli* revanced-patches*.jar patches.json 
-	dl_gh "revanced-cli" "inotia00" "latest"
-	dl_gh "revanced-patches" "inotia00" "latest"
-	# Split architecture Youtube:
-	for i in {0..3}; do
-		split_arch "youtube-$apk_name-anddea" "youtube-$apk_name-${archs[i]}-anddea" "$(gen_rip_libs ${libs[i]})"
-	done
-}
-patch_rve_anddea $1
+#Disabled because lastest RVE Anddea patch youtube not have splits apk on APKMirror
+# Patch YouTube:
+#get_patches_key "youtube-rve-anddea"
+#get_apk "com.google.android.youtube" "youtube-stable" "youtube" "google-inc/youtube/youtube" "Bundle_extract"
+#split_editor "youtube-stable" "youtube-stable"
+#patch "youtube-stable" "anddea" "inotia"
+# Patch Youtube Arm64-v8a
+#get_patches_key "youtube-rve-anddea"
+#split_editor "youtube-stable" "youtube-stable-arm64-v8a" "exclude" "split_config.armeabi_v7a split_config.x86 split_config.x86_64"
+#patch "youtube-stable-arm64-v8a" "anddea" "inotia"
+# Patch Youtube Armeabi-v7a
+#get_patches_key "youtube-rve-anddea"
+#split_editor "youtube-stable" "youtube-stable-armeabi-v7a" "exclude" "split_config.arm64_v8a split_config.x86 split_config.x86_64"
+#patch "youtube-stable-armeabi-v7a" "anddea" "inotia"
+# Patch Youtube x86
+#get_patches_key "youtube-rve-anddea"
+#split_editor "youtube-stable" "youtube-stable-x86" "exclude" "split_config.arm64_v8a split_config.armeabi_v7a split_config.x86_64"
+#patch "youtube-stable-x86" "anddea" "inotia"
+# Patch Youtube x86_64
+#get_patches_key "youtube-rve-anddea"
+#split_editor "youtube-stable" "youtube-stable-x86_64" "exclude" "split_config.arm64_v8a split_config.armeabi_v7a split_config.x86"
+#patch "youtube-stable-x86_64" "anddea" "inotia"
+# Patch YouTube:
+get_patches_key "youtube-rve-anddea"
+get_apk "com.google.android.youtube" "youtube-stable" "youtube" "google-inc/youtube/youtube"
+patch "youtube-stable" "anddea" "inotia"
+# Split architecture Youtube:
+get_patches_key "youtube-rve-anddea"
+for i in {0..3}; do
+  split_arch "youtube-stable" "anddea" "$(gen_rip_libs ${libs[i]})"
+done
+
+# Patch YouTube Music Extended:
+# Arm64-v8a
+get_patches_key "youtube-music-rve-anddea"
+get_apk "com.google.android.apps.youtube.music" "youtube-music-stable-arm64-v8a" "youtube-music" "google-inc/youtube-music/youtube-music" "arm64-v8a"
+patch "youtube-music-stable-arm64-v8a" "anddea" "inotia"
+# Armeabi-v7a
+get_patches_key "youtube-music-rve-anddea"
+get_apk "com.google.android.apps.youtube.music" "youtube-music-stable-armeabi-v7a" "youtube-music" "google-inc/youtube-music/youtube-music" "armeabi-v7a"
+patch "youtube-music-stable-armeabi-v7a" "anddea" "inotia"
+
+#Disabled because lastest RVE Anddea patch youtube not have splits apk on APKMirror
+#get_apk "com.google.android.youtube" "youtube-lite-beta" "youtube" "google-inc/youtube/youtube" "Bundle_extract"
+# Patch YouTube Lite Arm64-v8a:
+#get_patches_key "youtube-rve-anddea"
+#split_editor "youtube-lite-beta" "youtube-lite-beta-arm64-v8a" "include" "split_config.arm64_v8a split_config.en split_config.xhdpi split_config.xxxhdpi"
+#patch "youtube-lite-beta-arm64-v8a" "anddea" "inotia"
+# Patch YouTube Lite Armeabi-v7a:
+#get_patches_key "youtube-rve-anddea"
+#split_editor "youtube-lite-beta" "youtube-lite-beta-armeabi-v7a" "include" "split_config.armeabi_v7a split_config.en split_config.xhdpi split_config.xxxhdpi"
+#patch "youtube-lite-beta-armeabi-v7a" "anddea" "inotia"

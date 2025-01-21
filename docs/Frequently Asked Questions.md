@@ -10,6 +10,15 @@ The issue might be that your Android OS is preventing MicroG (GMS Core) from run
 
 [https://dontkillmyapp.com/](https://dontkillmyapp.com/)
 
+#### Use Po-token:
+
+If it still can't solve the buffering issue, maybe using PoToken can solve it.
+
+1. Download and install Revanced Extended or Revanced Extended forked by anddea.
+2. [Fork or use the template if you want to make your PoToken private.](https://github.com/FiorenMas/youtube-po-token-generator)
+3. Run the GitHub action in this repository. After the action completes, copy the PoToken and visitorData from the logs.
+4. Open the Revanced Extended app and go to Settings > Revanced Extended > Miscellaneous > Spoof Streaming data > Default cilent (select iOS) > PoToken/VisitorData. Then, paste the two values you copied in the previous step.
+
 ### Q: How do I use this repository for patching my own app?
 
 You should [fork](https://github.com/FiorenMas/Revanced-And-Revanced-Extended-Non-Root/fork) the repository, and then go to the `Action` tab
@@ -37,7 +46,15 @@ You should open the folder `Revanced-And-Revanced-Extended-Non-Root/src/patches/
 
 ### Q: I want to use a custom file options.json. How can I do it?
 
-You should open the folder [Revanced-And-Revanced-Extended-Non-Root/src/options/](../src/options). It contains files revanced.json, ReX.json... edit those file the same as you would options.json
+You should open the folder [Revanced-And-Revanced-Extended-Non-Root/src/options/](../src/options). It contains files revanced-extended.json, anddea.json... edit those file the same as you would options.json
+
+Revanced alias no longer use options.json anymore use directly `Revanced-And-Revanced-Extended-Non-Root/src/patches/` instead.
+
+The options separate with patches name with `|`
+
+Example Youtube apps include patches:
+
+`Custom branding|-OappName="YouTube ReVanced" -OiconPath=ReVanced*Logo`
 
 ---
 
